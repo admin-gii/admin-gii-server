@@ -31,12 +31,14 @@ postgres server `.env` fayldagi berilgan portga qarab ishga tushadi
 
 
 databaseda tabllarni yaratish
-
+```bash
 $ npm run db:migrate
+```
      
 database ga mock data qo'shsish
-  
+```bash
 $ npm run db:seed
+```
 
 
   
