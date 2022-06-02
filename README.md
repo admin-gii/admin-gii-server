@@ -30,13 +30,13 @@ backend server **8080** serverda ishga tushadi
 postgres server `.env` fayldagi berilgan portga qarab ishga tushadi
 
 
- databaseda tabllarni yaratish
+databaseda tabllarni yaratish
 
-     $ npm run db:migrate
+$ npm run db:migrate
      
 database ga mock data qo'shsish
   
-       $ npm run db:seed
+$ npm run db:seed
 
 
   
