@@ -16,6 +16,7 @@ exports.up = function (knex) {
       .references('id')
       .inTable('domains')
       .onDelete('CASCADE');
+    table.uuid('group_id').notNullable();
     table.boolean('has_relation').defaultTo(false);
     table.timestamps(true, true);
   });

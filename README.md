@@ -6,7 +6,9 @@ $ npm install
 
 ## Running the app
 
-```bash
+agar sizda docker compose plugini bo'lmasa link[https://gist.github.com/thaJeztah/b7950186212a49e91a806689e66b317d]
+
+<!-- ```bash
 # development
 $ npm run start
 
@@ -28,4 +30,4 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
-```
+``` -->
