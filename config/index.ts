@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const { env } = process;
 
 export const cfg = {
