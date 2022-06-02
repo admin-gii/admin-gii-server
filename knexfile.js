@@ -10,7 +10,8 @@ module.exports = {
       host: '127.0.0.1',
       user: 'postgres',
       password: '5596',
-      database: 'generate_admin',
+      database: 'admin_generator',
+      port: 5434,
     },
   },
 };
