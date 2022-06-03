@@ -12,7 +12,6 @@ export class AuthController {
   @ApiOkResponse({ description: 'ok' })
   async login(@Body() body: AuthDto): Promise<any> {
     const user = await this.authService.validateUser(body.email, body.password);
-
     if (user) {
       return user;
     }

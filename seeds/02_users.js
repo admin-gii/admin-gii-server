@@ -2,7 +2,22 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
- exports.seed = function (knex) {
+
+const bcrypt = require('bcryptjs');
+const generateHashPassword = async (password) => {
+  const saltOrRounds = 10;
+  const hash = await bcrypt.hash(password, saltOrRounds);
+  return hash;
+};
+
+const passwords = [];
+
+(async () => {
+  const password = await generateHashPassword('123456');
+  passwords.push(password);
+})();
+
+exports.seed = function (knex) {
   return knex('users')
     .del()
     .then(() => {
@@ -14,7 +29,7 @@
           email: 'example@exp.com',
           phone: 998914195596,
           role_id: 1,
-          hash: 'sfkljfal',
+          hash: passwords[0],
           status: true,
         },
         {
@@ -24,7 +39,7 @@
           email: 'example@exp2.com',
           phone: 998914195597,
           role_id: 2,
-          hash: 'sfkljfal',
+          hash: passwords[0],
           status: true,
         },
       ]);

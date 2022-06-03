@@ -9,8 +9,8 @@ export type User = any;
 export class UsersService {
   constructor(@InjectConnection() private readonly knex: Knex) {}
 
-  async findOne(email: string, password: string): Promise<User | undefined> {
-    return await this.knex('users').where({ email, hash: password }).first();
+  async findOne(email: string): Promise<User | undefined> {
+    return await this.knex('users').where({ email }).first();
   }
 
   async findAll(): Promise<User[]> {
