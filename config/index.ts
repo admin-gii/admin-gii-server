@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const { env } = process;
 
 export const cfg = {
@@ -13,4 +15,5 @@ export const cfg = {
       },
     },
   },
+  jwt_secret: env.JWT_SECRET,
 };

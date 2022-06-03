@@ -2,12 +2,16 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
- exports.up = function (knex) {
+exports.up = function (knex) {
   return knex.schema.createTable('domain_fields', (table) => {
     table.increments('id').primary();
-    table.string('name').notNullable();
-    table.string('slug').notNullable();
-    table.integer('domain_id').references('id').inTable('domains').onDelete('CASCADE');
+    table.string('name');
+    table.string('slug').unique().notNullable();
+    table
+      .integer('domain_id')
+      .references('id')
+      .inTable('domains')
+      .onDelete('CASCADE');
     table.timestamps(true, true);
   });
 };

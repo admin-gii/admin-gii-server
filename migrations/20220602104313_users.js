@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments('id').primary();
     table.string('first_name');
     table.string('last_name');
-    table.string('email').notNullable();
+    table.string('email').unique().notNullable();
     table.string('hash').notNullable();
     table.bigint('phone');
     table.boolean('status').defaultTo(true);

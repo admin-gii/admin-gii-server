@@ -5,8 +5,8 @@
 exports.up = function (knex) {
   return knex.schema.createTable('form_types', (table) => {
     table.increments('id').primary();
-    table.string('name').notNullable();
-    table.string('slug').notNullable();
+    table.string('name');
+    table.string('slug').unique().notNullable();
     table.timestamps(true, true);
   });
 };
