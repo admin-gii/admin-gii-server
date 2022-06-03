@@ -4,7 +4,9 @@ services:
   # When Docker Compose starts this container it will automatically
   # use the Dockerfile in the directory to configure it
   app:
-    build: .
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
     depends_on:
       # Our app does not work without our database
       # so this ensures our database is loaded first
@@ -19,7 +21,7 @@ services:
   # address of this container.
   postgres:
     image: postgres:14.1-alpine
-    restart: always
+    restart: unless-stopped
     environment:
       # You can set the value of environment variables
       # in your docker-compose.yml file
@@ -31,3 +33,4 @@ services:
     ports:
       # Standard port for PostgreSQL databases
       - "${DB_PORT}:5432"
+ 
