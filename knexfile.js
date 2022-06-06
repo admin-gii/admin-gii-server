@@ -6,7 +6,7 @@
 
 require('dotenv').config();
 const { DB_USER, DB_PASS, DB_NAME, DB_PORT, DB_HOST, NODE_ENV } = process.env;
-console.log(NODE_ENV);
+
 module.exports = {
   development: {
     client: 'postgresql',
