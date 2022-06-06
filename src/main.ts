@@ -17,11 +17,11 @@ async function bootstrap() {
   );
 
   app.setGlobalPrefix('api/v1');
-  
   const config = new DocumentBuilder()
     .setTitle('NestJS API')
     .setDescription('The NestJS API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
     include: [UsersModule, AuthModule],

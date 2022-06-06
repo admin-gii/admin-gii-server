@@ -3,11 +3,11 @@ dotenv.config();
 const { env } = process;
 
 export const cfg = {
-  knex: {
+  knex_dev: {
     config: {
       client: 'postgresql',
       connection: {
-        host: env.DB_HOST,
+        host: 'localhost',
         database: env.DB_NAME,
         user: env.DB_USER,
         password: env.DB_PASS,
@@ -15,5 +15,18 @@ export const cfg = {
       },
     },
   },
+  knex_prod: {
+    config: {
+      client: 'postgresql',
+      connection: {
+        host: 'postgres',
+        database: env.DB_NAME,
+        user: env.DB_USER,
+        password: env.DB_PASS,
+        port: 5432,
+      },
+    },
+  },
   jwt_secret: env.JWT_SECRET,
+  node_env: env.NODE_ENV,
 };

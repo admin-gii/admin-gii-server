@@ -4,6 +4,8 @@ services:
   # When Docker Compose starts this container it will automatically
   # use the Dockerfile in the directory to configure it
   app:
+    container_name: admin-generator-server
+    restart: unless-stopped
     build: 
       context: .
       dockerfile: ./Dockerfile
@@ -13,6 +15,8 @@ services:
       - postgres
     ports:
       - "8080:3000"
+    networks:
+      - app_default
 
 
   # This is the configuration for our PostgreSQL database container
@@ -30,7 +34,14 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_PORT=${DB_PORT}
     ports:
       # Standard port for PostgreSQL databases
       - "${DB_PORT}:5432"
+    networks:
+      - app_default
+networks:
+  app_default:
+    external: true
  

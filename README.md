@@ -30,16 +30,10 @@ backend server **8080** serverda ishga tushadi
 postgres server `.env` fayldagi berilgan portga qarab ishga tushadi
 
 
-databaseda tabllarni yaratish
+dockerda network yarating
 ```bash
-$ npm run db:migrate
+docker network create --driver bridge app_default || true
 ```
-     
-database ga mock data qo'shsish
-```bash
-$ npm run db:seed
-```
-
 
   
 

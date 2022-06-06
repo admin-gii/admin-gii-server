@@ -12,7 +12,9 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env' }),
-    KnexModule.forRoot(cfg.knex),
+    KnexModule.forRoot(
+      cfg.node_env === 'development' ? cfg.knex_dev : cfg.knex_prod,
+    ),
     AuthModule,
     UsersModule,
     JwtModule,
