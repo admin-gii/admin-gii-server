@@ -40,6 +40,10 @@ database ga mock data qo'shsish
 $ npm run db:seed
 ```
 
+dockerda network yarating
+```bash
+docker network create --driver bridge app_default || true
+```
 
   
 

@@ -7,11 +7,11 @@ export const cfg = {
     config: {
       client: 'postgresql',
       connection: {
-        host: env.DB_HOST,
+        host: 'postgres',
         database: env.DB_NAME,
         user: env.DB_USER,
         password: env.DB_PASS,
-        port: env.DB_PORT,
+        port: 5432,
       },
     },
   },

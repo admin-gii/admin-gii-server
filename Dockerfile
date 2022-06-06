@@ -16,6 +16,6 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 3000
 
-CMD [ "npm", "run", "start" ]
+EXPOSE 3000
+CMD npm i && npm run db:migrate && npm run db:seed && npm start
