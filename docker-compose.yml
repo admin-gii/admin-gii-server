@@ -5,6 +5,7 @@ services:
   # use the Dockerfile in the directory to configure it
   app:
     container_name: admin-generator-server
+    restart: unless-stopped
     build: 
       context: .
       dockerfile: ./Dockerfile
