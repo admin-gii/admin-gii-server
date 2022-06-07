@@ -18,4 +18,4 @@ COPY . .
 
 
 EXPOSE 3000
-CMD npm i && npm run db:migrate && npm run db:seed && npm start
+CMD npm i && npm run db:migrate && npm run db:seed && npm run start:dev

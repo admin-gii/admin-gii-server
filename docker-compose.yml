@@ -5,7 +5,7 @@ services:
   # use the Dockerfile in the directory to configure it
   app:
     container_name: admin-generator-server
-    restart: unless-stopped
+    restart: always
     build: 
       context: .
       dockerfile: ./Dockerfile
@@ -15,8 +15,8 @@ services:
       - postgres
     ports:
       - "8080:3000"
-    networks:
-      - app_default
+    volumes:
+      - ./:/usr/src/app
 
 
   # This is the configuration for our PostgreSQL database container
@@ -39,9 +39,5 @@ services:
     ports:
       # Standard port for PostgreSQL databases
       - "${DB_PORT}:5432"
-    networks:
-      - app_default
-networks:
-  app_default:
-    external: true
+
  

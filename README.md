@@ -6,14 +6,15 @@
 postgres server bilan backendni ishga tushurish
 
 ```bash
-
-$ docker compose up -d
-
+$ docker compose up -d --build app
 ```
 
-  
+postgres server bilan backendni o'chirish
 
-  
+```bash
+$ docker compose down -v
+```
+
 
 ## Running the app
 
@@ -30,12 +31,6 @@ backend server **8080** serverda ishga tushadi
 postgres server `.env` fayldagi berilgan portga qarab ishga tushadi
 
 
-dockerda network yarating
-```bash
-docker network create --driver bridge app_default || true
-```
-
-  
 
 <!-- ```bash
 
