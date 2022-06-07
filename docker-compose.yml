@@ -15,8 +15,6 @@ services:
       - postgres
     ports:
       - "8080:3000"
-    networks:
-      - app_default
 
 
   # This is the configuration for our PostgreSQL database container
@@ -39,9 +37,5 @@ services:
     ports:
       # Standard port for PostgreSQL databases
       - "${DB_PORT}:5432"
-    networks:
-      - app_default
-networks:
-  app_default:
-    external: true
+
  
