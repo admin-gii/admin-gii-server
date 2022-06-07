@@ -25,7 +25,6 @@ export class UsersService {
         'r.created_at as role_created_at',
         'r.updated_at as role_updated_at',
         'u.updated_at as user_updated_at',
-        'u.hash'
       )
       .where({ email, status: true })
       .join('roles as r', 'r.id', 'u.role_id')
