@@ -8,6 +8,8 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthController } from './modules/auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { cfg } from 'config';
+import { RoleModule } from './modules/roles/role.module';
+import { RoleController } from './modules/roles/role.controller';
 
 @Module({
   imports: [
@@ -16,8 +18,9 @@ import { cfg } from 'config';
     AuthModule,
     UsersModule,
     JwtModule,
+    RoleModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController, AuthController, RoleController],
   providers: [AppService],
 })
 export class AppModule {}

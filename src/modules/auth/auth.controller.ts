@@ -31,7 +31,6 @@ export class AuthController {
   async login(@Req() req, @Body() body: AuthDto): Promise<any> {
     const user = req.user;
     const payload = { userId: user.user_id, sub: user.user_email };
-    console.log(user);
 
     const accessToken = this.jwtService.sign(payload, {
       secret: cfg.jwt.secret,
