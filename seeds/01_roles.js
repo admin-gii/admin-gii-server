@@ -8,12 +8,10 @@ exports.seed = function (knex) {
     .then(() => {
       return knex('roles').insert([
         {
-          id: 1,
           name: 'Admin',
           slug: 'admin',
         },
         {
-          id: 2,
           name: 'User',
           slug: 'user',
         },

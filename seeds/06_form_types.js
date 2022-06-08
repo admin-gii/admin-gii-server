@@ -8,12 +8,10 @@ exports.seed = function (knex) {
     .then(() => {
       return knex('form_types').insert([
         {
-          id: 1,
           name: 'Title',
           slug: 'title',
         },
         {
-          id: 2,
           name: 'Description',
           slug: 'desctiption',
         },
