@@ -8,13 +8,11 @@ exports.seed = function (knex) {
     .then(() => {
       return knex('domain_fields').insert([
         {
-          id: 1,
           name: 'Title',
           slug: 'title',
           domain_id: 1,
         },
         {
-          id: 2,
           name: 'Description',
           slug: 'desctiption',
           domain_id: 1,
