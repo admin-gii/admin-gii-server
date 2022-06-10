@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { generateHashPassword } from '@/helpers/generate.hash.password';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
+import { UpdateMeDto } from './dto/update-me.dto';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
@@ -34,5 +36,29 @@ export class UsersService {
 
   async findAll(): Promise<User[]> {
     return await this.knex('users').select();
+  }
+
+  async updateCurrentUser(
+    userId: number,
+    dto: UpdateMeDto,
+  ): Promise<{ id: number } | undefined> {
+    const user = await  this.knex('users').where({id: userId}).first()
+    const findEmail = await this.knex('users').where({email:dto.email}).andWhereNot({email:user.email });
+    if(findEmail.length){
+      throw new ConflictException('This email already exists')
+    }
+    const updateMe = await this.knex('users')
+    .where({ id:userId })
+    .update({
+      first_name: dto.first_name,
+      last_name: dto.last_name,
+      email: dto.email,
+      hash: await generateHashPassword(dto.password),
+      phone: dto.phone,
+      updated_at:new Date()
+    })
+    .returning('id');
+
+    return {id:updateMe[0].id}
   }
 }
