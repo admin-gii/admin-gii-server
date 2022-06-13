@@ -9,6 +9,9 @@ endif
 build:
 	docker compose up --build -d app
 
+down:
+	docker compose down -v
+
 logs:
 	docker logs --follow admin-generator-server
 
