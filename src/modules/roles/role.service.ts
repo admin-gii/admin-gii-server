@@ -15,6 +15,12 @@ export class RoleService {
     return findRole[0]
   } 
 
+  async getBySlug(slug:string):Promise<any> {
+    const getSlug = await this.knex('roles').where({slug})
+    if(!getSlug.length) throw new NotFoundException('Not found')
+    return getSlug[0]
+  }
+
   findAll(): Promise<Role[]> {
     return this.knex('roles').select().orderBy('created_at', 'desc')
   }
