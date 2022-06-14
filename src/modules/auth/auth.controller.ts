@@ -47,7 +47,8 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async getUserWithToken(@Req() req): Promise<any> {
-    const user = this.authService.getUser(req.user.email);
+    const user = await this.authService.getUser(req.user.email);
+    delete user.hash;
     return user;
   }
 }
