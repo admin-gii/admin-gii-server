@@ -17,6 +17,12 @@ export class RoleController {
     return this.roleService.findOne(id)
   }
 
+  @Get('/slug/:slug')
+  @ApiOkResponse({ description: 'ok' })
+  getByRole(@Param('slug') slug: string) {
+    return this.roleService.getBySlug(slug)
+  }
+
   @Get()
   @ApiOkResponse({ description: 'ok' })
   getRoles() {
