@@ -11,6 +11,10 @@ build:
 
 down:
 	docker compose down -v
+stop:
+	docker compose stop
+start:
+	docker compose start
 
 logs:
 	docker logs --follow admin-generator-server
