@@ -30,6 +30,6 @@ export class AuthService {
   }
 
   async getUser(email: string): Promise<any> {
-    return this.usersService.findOne(email, );
+    return await this.usersService.findOne(email);
   }
 }
