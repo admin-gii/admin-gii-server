@@ -7,6 +7,11 @@ exports.up = function (knex) {
     table.increments('id').primary();
     table.string('name');
     table.string('slug').unique().notNullable();
+    table
+      .integer('domain_id')
+      .references('id')
+      .inTable('domains')
+      .onDelete('CASCADE');
     table.timestamps(true, true);
   });
 };
