@@ -7,7 +7,14 @@ import { RoleModule } from './modules/roles/role.module';
 import { UsersModule } from './modules/users/users.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: false });
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: '*',
+      allowedHeaders: '*',
+      methods: '*',
+      preflightContinue: false,
+    },
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -25,7 +32,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
-    include: [UsersModule, AuthModule,RoleModule],
+    include: [UsersModule, AuthModule, RoleModule],
   });
   SwaggerModule.setup('api-docs', app, document);
   await app.listen(3000);
