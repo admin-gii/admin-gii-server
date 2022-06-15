@@ -5,7 +5,6 @@ import {
   HttpCode,
   Post,
   Req,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -15,6 +14,7 @@ import { AuthDto } from './dto/auth.dto';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { cfg } from 'config';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
+import { formatObject } from '@/helpers/format.object';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -28,9 +28,10 @@ export class AuthController {
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @ApiOkResponse({ description: 'ok' })
-  async login(@Req() req, @Body() body: AuthDto): Promise<any> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async login(@Req() req, @Body() _body: AuthDto): Promise<any> {
     const user = req.user;
-    const payload = { userId: user.user_id, sub: user.user_email };
+    const payload = { userId: user.id, sub: user.email };
 
     const accessToken = this.jwtService.sign(payload, {
       secret: cfg.jwt.secret,
@@ -47,8 +48,8 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async getUserWithToken(@Req() req): Promise<any> {
-    const user = await this.authService.getUser(req.user.email);
-    delete user.hash;
+    let user = await this.authService.getUser(req.user.userId);
+    user = formatObject(user);
     return user;
   }
 }

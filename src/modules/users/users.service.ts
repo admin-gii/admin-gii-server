@@ -20,23 +20,23 @@ export class UsersService {
   async findOne(email: string): Promise<User | undefined> {
     return await this.knex('users as u')
       .select(
-        'u.id as user_id',
-        'u.phone as user_phone',
-        'u.email as user_email',
-        'u.first_name as user_firstname',
-        'u.last_name as user_last_name',
-        'u.status as user_status',
-        'r.name as role_name',
-        'u.role_id',
-        'r.slug as role_slug',
-        'u.created_at as user_created_at',
-        'r.created_at as role_created_at',
-        'r.updated_at as role_updated_at',
-        'u.updated_at as user_updated_at',
+        'u.id',
+        'u.phone',
+        'u.email',
+        'u.first_name',
+        'u.last_name',
+        'u.status',
+        'r.name as role__name',
+        'u.role_id as role__id',
+        'r.slug as role__slug',
+        'u.created_at',
+        'r.created_at as role__created_at',
+        'r.updated_at as role__updated_at',
+        'u.updated_at',
         'u.hash',
       )
       .where({ email, status: true })
-      .join('roles as r', 'r.id', 'u.role_id')
+      .join('roles as r', 'u.role_id', '=', 'r.id')
       .first();
   }
 
@@ -48,30 +48,54 @@ export class UsersService {
     userId: number,
     dto: UpdateMeDto,
   ): Promise<{ id: number } | undefined> {
-    const user = await  this.knex('users').where({id: userId}).first()
-    const findEmail = await this.knex('users').where({email:dto.email}).andWhereNot({email:user.email });
-    if(findEmail.length){
-      throw new ConflictException('This email already exists')
+    const user = await this.knex('users').where({ id: userId }).first();
+    const findEmail = await this.knex('users')
+      .where({ email: dto.email })
+      .andWhereNot({ email: user.email });
+    if (findEmail.length) {
+      throw new ConflictException('This email already exists');
     }
     const updateMe = await this.knex('users')
-    .where({ id:userId })
-    .update({
-      first_name: dto.first_name,
-      last_name: dto.last_name,
-      email: dto.email,
-      hash: await generateHashPassword(dto.password),
-      phone: dto.phone,
-      updated_at:new Date()
-    })
-    .returning('id');
+      .where({ id: userId })
+      .update({
+        first_name: dto.first_name,
+        last_name: dto.last_name,
+        email: dto.email,
+        hash: await generateHashPassword(dto.password),
+        phone: dto.phone,
+        updated_at: new Date(),
+      })
+      .returning('id');
 
-    return {id:updateMe[0].id}
+    return { id: updateMe[0].id };
   }
 
   async getUserById(userId: number): Promise<User> {
     try {
-      const user = await this.knex('users').select().where('id', userId);
-      if (!user.length) throw new NotFoundException('userId invalid!');
+      const user = await this.knex
+        .select(
+          'u.id',
+          'u.phone',
+          'u.email',
+          'u.first_name',
+          'u.last_name',
+          'u.status',
+          'r.name as role__name',
+          'r.id as role__id',
+          'r.slug as role__slug',
+          'u.created_at',
+          'r.created_at as role__created_at',
+          'r.updated_at as role__updated_at',
+          'u.updated_at',
+          'u.hash',
+        )
+        .from('users as u')
+        .join('roles as r', 'u.role_id', '=', 'r.id')
+        .where('u.id', userId)
+        .first();
+
+      if (!user) throw new NotFoundException('userId invalid!');
+      delete user.hash;
       return user;
     } catch (err) {
       throw err;
