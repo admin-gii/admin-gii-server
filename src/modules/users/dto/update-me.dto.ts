@@ -1,6 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger"
-import { IsInt, IsNotEmpty, IsString } from "class-validator"
-
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInt, IsString } from 'class-validator';
 
 export class UpdateMeDto {
   @ApiProperty({ type: String })
@@ -9,11 +8,11 @@ export class UpdateMeDto {
 
   @ApiProperty({ type: String })
   @IsString()
-  last_name: string
+  last_name: string;
 
   @ApiProperty({ type: String })
   @IsString()
-  email: string
+  email: string;
 
   @ApiProperty({ type: String })
   @IsString()
@@ -23,4 +22,3 @@ export class UpdateMeDto {
   @IsInt()
   phone: number;
 }
-

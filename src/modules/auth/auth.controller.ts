@@ -15,6 +15,7 @@ import { LocalAuthGuard } from './guard/local-auth.guard';
 import { cfg } from 'config';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { formatObject } from '@/helpers/format.object';
+import { CreateResponse } from '@/helpers/create.response';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -37,9 +38,12 @@ export class AuthController {
       secret: cfg.jwt.secret,
       expiresIn: cfg.jwt.expiresIn,
     });
-    return {
-      token: `Bearer ${accessToken}`,
-    };
+    return CreateResponse(
+      {
+        token: `Bearer ${accessToken}`,
+      },
+      'Login Success',
+    );
   }
 
   @Get('me')
@@ -50,6 +54,6 @@ export class AuthController {
   async getUserWithToken(@Req() req): Promise<any> {
     let user = await this.authService.getUser(req.user.userId);
     user = formatObject(user);
-    return user;
+    return CreateResponse(user, 'Get Me Success');
   }
 }
