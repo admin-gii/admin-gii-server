@@ -1,12 +1,7 @@
-import {
-  HttpException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { cfg } from 'config';
 @Injectable()
 export class AuthService {
   constructor(
@@ -20,7 +15,8 @@ export class AuthService {
     if (user) {
       const isMatch = await bcrypt.compare(pass, user.hash);
       if (isMatch) {
-        const { password, ...result } = user;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { hash, ...result } = user;
 
         return result;
       }
@@ -29,7 +25,7 @@ export class AuthService {
     return null;
   }
 
-  async getUser(email: string): Promise<any> {
-    return await this.usersService.findOne(email);
+  async getUser(id: number): Promise<any> {
+    return await this.usersService.getUserById(id);
   }
 }

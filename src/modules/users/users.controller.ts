@@ -1,14 +1,27 @@
-import { Body, Controller, Get, Put, Req, UseGuards ,  Delete,
+import {
+  Body,
+  Controller,
+  Get,
+  Put,
+  Req,
+  UseGuards,
+  Delete,
   Param,
   ParseIntPipe,
-  Post, } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiResponse, ApiTags , ApiCreatedResponse } from '@nestjs/swagger';
-import { Request } from 'express';
+  Post,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiTags,
+  ApiCreatedResponse,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { UpdateMeDto } from './dto/update-me.dto';
 
 import { ChangeUserDto, CreateUserDto } from './dto';
 import { UsersService } from './users.service';
+import { formatObject } from '@/helpers/format.object';
 
 @Controller('users')
 @ApiTags('users')
@@ -24,15 +37,17 @@ export class UsersController {
   }
 
   @ApiOkResponse({ description: 'ok' })
-  @Put('update-me')
-  async updateMe(@Req() req , @Body() body:UpdateMeDto): Promise<any> {
-    return await this.usersService.updateCurrentUser( req.user.userId  , body )
+  @Put('me')
+  async updateMe(@Req() req, @Body() body: UpdateMeDto): Promise<any> {
+    return await this.usersService.updateCurrentUser(req.user.userId, body);
   }
 
   @Get(':id')
   @ApiOkResponse({ description: 'ok' })
   async getUserById(@Param('id', ParseIntPipe) userId: number): Promise<any> {
-    return await this.usersService.getUserById(userId);
+    let user = await this.usersService.getUserById(userId);
+    user = formatObject(user);
+    return user;
   }
 
   @Post()
