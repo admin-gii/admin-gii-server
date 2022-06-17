@@ -10,10 +10,16 @@ exports.seed = function (knex) {
         {
           name: 'Title',
           slug: 'title',
+          domain_id: 1,
+          domain_label_field_id: 2,
+          domain_value_field_id: 1,
         },
         {
           name: 'Description',
           slug: 'desctiption',
+          domain_id: 1,
+          domain_label_field_id: 1,
+          domain_value_field_id: 2,
         },
       ]);
     });

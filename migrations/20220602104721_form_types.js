@@ -12,6 +12,16 @@ exports.up = function (knex) {
       .references('id')
       .inTable('domains')
       .onDelete('CASCADE');
+    table
+      .integer('domain_label_field_id')
+      .references('id')
+      .inTable('domain_fields')
+      .onDelete('CASCADE');
+    table
+      .integer('domain_value_field_id')
+      .references('id')
+      .inTable('domain_fields')
+      .onDelete('CASCADE');
     table.timestamps(true, true);
   });
 };
