@@ -8,6 +8,7 @@ endif
 
 build:
 	docker compose up --build -d app
+	sleep 5s
 	docker exec -it admin-generator-server npm run db:migrate
 	docker exec -it admin-generator-server npm run db:seed
 
