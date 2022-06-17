@@ -21,7 +21,8 @@ import { UpdateMeDto } from './dto/update-me.dto';
 
 import { ChangeUserDto, CreateUserDto } from './dto';
 import { UsersService } from './users.service';
-import { formatObject } from '@/helpers/format.object';
+import { formatArrayObject, formatObject } from '@/helpers/format.object';
+import { CreateResponse } from '@/helpers/create.response';
 
 @Controller('users')
 @ApiTags('users')
@@ -33,13 +34,17 @@ export class UsersController {
   @Get()
   @ApiOkResponse({ description: 'ok' })
   async getUsers(): Promise<any> {
-    return await this.usersService.findAll();
+    let users = await this.usersService.findAll();
+    users = formatArrayObject(users);
+
+    return CreateResponse(users, 'Get users success');
   }
 
   @ApiOkResponse({ description: 'ok' })
   @Put('me')
   async updateMe(@Req() req, @Body() body: UpdateMeDto): Promise<any> {
-    return await this.usersService.updateCurrentUser(req.user.userId, body);
+    const user = await this.usersService.updateUser(req.user.id, body);
+    return CreateResponse(user, 'Update user success');
   }
 
   @Get(':id')
@@ -47,13 +52,14 @@ export class UsersController {
   async getUserById(@Param('id', ParseIntPipe) userId: number): Promise<any> {
     let user = await this.usersService.getUserById(userId);
     user = formatObject(user);
-    return user;
+    return CreateResponse(user, 'Get user by id success');
   }
 
   @Post()
   @ApiCreatedResponse({ description: 'created' })
   async createUser(@Body() userDto: CreateUserDto): Promise<any> {
-    return await this.usersService.createUser(userDto);
+    const user = await this.usersService.createUser(userDto);
+    return CreateResponse(user, 'Create user success');
   }
 
   @Put(':id')
@@ -62,12 +68,14 @@ export class UsersController {
     @Param('id', ParseIntPipe) userId: number,
     @Body() userDto: ChangeUserDto,
   ): Promise<any> {
-    return await this.usersService.updateUser(userId, userDto);
+    const user = await this.usersService.updateUser(userId, userDto);
+    return CreateResponse(user, 'Update user success');
   }
 
   @Delete(':id')
   @ApiOkResponse({ description: 'ok' })
   async deletedUser(@Param('id', ParseIntPipe) userId: number): Promise<any> {
-    return await this.usersService.deleteUser(userId);
+    const user = await this.usersService.deleteUser(userId);
+    return CreateResponse(user, 'Delete user success');
   }
 }
