@@ -26,8 +26,6 @@ bash:
 
 psql:
 	docker exec -it admin-generator-db psql -U ${DB_USER} -d ${DB_NAME}
-bash:
-	docker exec -it admin-generator-server sh
 
 
 
