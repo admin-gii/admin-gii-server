@@ -32,7 +32,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
-    include: [UsersModule, AuthModule, RoleModule],
+    include: [UsersModule, RoleModule, AuthModule],
   });
   SwaggerModule.setup('api-docs', app, document);
   await app.listen(3000);
