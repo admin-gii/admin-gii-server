@@ -10,6 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { cfg } from 'config';
 import { RoleModule } from './modules/roles/role.module';
 import { RoleController } from './modules/roles/role.controller';
+import { FormTypesModule } from './modules/form-types/form-types.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { RoleController } from './modules/roles/role.controller';
     UsersModule,
     JwtModule,
     RoleModule,
+    FormTypesModule,
   ],
   controllers: [AppController, AuthController, RoleController],
   providers: [AppService],
