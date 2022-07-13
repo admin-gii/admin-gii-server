@@ -1,3 +1,6 @@
+import { DomainsModule } from './modules/domains/domains.module';
+import { DomainsController } from './modules/domains/domains.controller';
+import { DomainsService } from './modules/domains/domains.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -13,6 +16,7 @@ import { RoleController } from './modules/roles/role.controller';
 
 @Module({
   imports: [
+    DomainsModule,
     ConfigModule.forRoot({ envFilePath: '.env' }),
     KnexModule.forRoot(cfg.knex),
     AuthModule,
@@ -20,7 +24,9 @@ import { RoleController } from './modules/roles/role.controller';
     JwtModule,
     RoleModule,
   ],
-  controllers: [AppController, AuthController, RoleController],
-  providers: [AppService],
+  controllers: [
+    DomainsController, AppController, AuthController, RoleController],
+  providers: [
+    DomainsService, AppService],
 })
-export class AppModule {}
+export class AppModule { }
