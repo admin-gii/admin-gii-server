@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { DomainsValuesModule } from './modules/domainValues/domainsValues.module';
 import { FormTypesModule } from './modules/form-types/form-types.module';
 import { RoleModule } from './modules/roles/role.module';
 import { UsersModule } from './modules/users/users.module';
@@ -33,7 +34,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
-    include: [UsersModule, RoleModule, AuthModule, FormTypesModule],
+    include: [UsersModule, RoleModule, AuthModule, FormTypesModule , DomainsValuesModule],
   });
   SwaggerModule.setup('api-docs', app, document);
   await app.listen(3000);

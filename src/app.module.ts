@@ -1,3 +1,6 @@
+import { DomainsValuesModule } from './modules/domainValues/domainsValues.module';
+import { DomainsValuesController } from './modules/domainValues/domainsValues.controller';
+import { DomainsValuesService } from './modules/domainValues/domainsValues.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,6 +17,7 @@ import { FormTypesModule } from './modules/form-types/form-types.module';
 
 @Module({
   imports: [
+    DomainsValuesModule,
     ConfigModule.forRoot({ envFilePath: '.env' }),
     KnexModule.forRoot(cfg.knex),
     AuthModule,
@@ -22,7 +26,9 @@ import { FormTypesModule } from './modules/form-types/form-types.module';
     RoleModule,
     FormTypesModule,
   ],
-  controllers: [AppController, AuthController, RoleController],
-  providers: [AppService],
+  controllers: [
+    DomainsValuesController, AppController, AuthController, RoleController],
+  providers: [
+    DomainsValuesService, AppService],
 })
-export class AppModule {}
+export class AppModule { }
