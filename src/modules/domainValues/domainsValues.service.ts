@@ -9,7 +9,7 @@ import { CreateDomainValuesDto } from './dto/domainValues.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
-export class DomainsService {
+export class DomainsValuesService {
     constructor(@InjectConnection() private readonly knex: Knex) { }
 
     async getDomainValues() {

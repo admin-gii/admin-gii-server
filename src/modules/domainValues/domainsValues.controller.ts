@@ -4,21 +4,24 @@ https://docs.nestjs.com/controllers#controllers
 
 import { CreateResponse } from '@/helpers/create.response';
 import { formatArrayObject , formatObject} from '@/helpers/format.object';
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { DomainsService } from './domains.service';
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { DomainsValuesService } from './domainsValues.service';
 import { CreateDomainValuesDto } from './dto/domainValues.dto';
 
-@ApiTags('Domains')
+@ApiTags('Domain-values')
 @Controller()
-export class DomainsController {
-    constructor(private readonly domainsService: DomainsService) { }
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+export class DomainsValuesController {
+    constructor(private readonly domainsValuesService: DomainsValuesService) { }
 
     @Get('domain-values')
     @HttpCode(200)
     @ApiOkResponse({ description: 'ok' })
     async getDomainValues(): Promise<any> {
-       let domainValues =  await this.domainsService.getDomainValues()
+       let domainValues =  await this.domainsValuesService.getDomainValues()
        return CreateResponse(domainValues , 'Get domain-values success')
     }
 
@@ -26,7 +29,7 @@ export class DomainsController {
     @HttpCode(200)
     @ApiOkResponse({ description: 'ok' })
     async getDomainValuesById(@Param('id', ParseIntPipe) id: number): Promise<any> {
-        let domainValues  = await this.domainsService.getDomainValuesById(id)
+        let domainValues  = await this.domainsValuesService.getDomainValuesById(id)
         return CreateResponse(domainValues , 'Get domain-values by id success')
     }
 
@@ -34,7 +37,7 @@ export class DomainsController {
     @HttpCode(200)
     @ApiOkResponse({ description: 'ok' })
     async postDomainValues(@Body() dto: CreateDomainValuesDto): Promise<any> {
-        const domainValues = await this.domainsService.postDomainValues(dto)
+        const domainValues = await this.domainsValuesService.postDomainValues(dto)
         return CreateResponse(domainValues, 'Create domain-values success')
     }
 
@@ -42,7 +45,7 @@ export class DomainsController {
     @HttpCode(200)
     @ApiOkResponse({ description: 'ok' })
     async putDomainValues(@Param('id', ParseIntPipe) domainValuesId: number ,@Body() dto: CreateDomainValuesDto): Promise<any> {
-        const domainValues = await this.domainsService.putDomainValues(dto , domainValuesId)
+        const domainValues = await this.domainsValuesService.putDomainValues(dto , domainValuesId)
         return CreateResponse(domainValues, 'Update domain-values success')
     }
 
@@ -50,7 +53,7 @@ export class DomainsController {
     @HttpCode(200)
     @ApiOkResponse({description:'ok'})
     async deleteDomainValues(@Param('id',ParseIntPipe) domainValuesId:number){
-        const domainValues = await this.domainsService.deleteDomainValues(domainValuesId)
+        const domainValues = await this.domainsValuesService.deleteDomainValues(domainValuesId)
         return CreateResponse(domainValues, 'Delete domain-values success')
     }
 }
