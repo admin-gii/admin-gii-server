@@ -14,6 +14,7 @@ import { cfg } from 'config';
 import { RoleModule } from './modules/roles/role.module';
 import { RoleController } from './modules/roles/role.controller';
 import { FormTypesModule } from './modules/form-types/form-types.module';
+import { DomainsModule } from './modules/domains/domains.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { FormTypesModule } from './modules/form-types/form-types.module';
     JwtModule,
     RoleModule,
     FormTypesModule,
+    DomainsModule
   ],
   controllers: [
     DomainsValuesController, AppController, AuthController, RoleController],
