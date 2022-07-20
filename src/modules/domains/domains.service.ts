@@ -3,7 +3,7 @@ import { Knex } from 'knex';
 import { InjectConnection } from 'nest-knexjs';
 
 export type Domain = any;
-
+// Hello world !
 @Injectable()
 export class DomainsService {
   constructor(@InjectConnection() private readonly knex: Knex) { }
