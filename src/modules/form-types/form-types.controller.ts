@@ -68,7 +68,10 @@ export class FormTypesController {
     @Param('id', ParseIntPipe) id: number,
     @Body() formTypeDto: UpdateFormTypesDto,
   ) {
-    let updatedId = await this.formTypesService.updateFormType(id, formTypeDto);
+    const updatedId = await this.formTypesService.updateFormType(
+      id,
+      formTypeDto,
+    );
     return CreateResponse(updatedId[0], 'Form type updated successfully!');
   }
 
@@ -76,7 +79,7 @@ export class FormTypesController {
   @HttpCode(200)
   @ApiOkResponse({ description: 'ok' })
   async deleteFormType(@Param('id', ParseIntPipe) id: number) {
-    let deletedId = await this.formTypesService.deleteFormType(id);
+    const deletedId = await this.formTypesService.deleteFormType(id);
     return CreateResponse(deletedId, 'Deleted successfully');
   }
 }
