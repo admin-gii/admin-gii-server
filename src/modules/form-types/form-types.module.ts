@@ -4,6 +4,6 @@ import { FormTypesService } from './form-types.service';
 
 @Module({
   controllers: [FormTypesController],
-  providers: [FormTypesService]
+  providers: [FormTypesService],
 })
 export class FormTypesModule {}

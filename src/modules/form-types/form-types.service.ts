@@ -49,12 +49,12 @@ export class FormTypesService {
     return await this.knex('form_types').select().orderBy('created_at', 'desc');
   }
   async getFormTypeById(id: number): Promise<FormType> {
-    let formType = await this.knex('form_types').where({ id }).first();
+    const formType = await this.knex('form_types').where({ id }).first();
     if (!formType) throw new NotFoundException('Form type id invalid');
     return formType;
   }
   async getFormTypeBySlug(slug: string): Promise<FormType> {
-    let formType = await this.knex('form_types').where({ slug }).first();
+    const formType = await this.knex('form_types').where({ slug }).first();
     if (!formType) throw new NotFoundException('Form type slug invalid');
     return formType;
   }
@@ -91,7 +91,7 @@ export class FormTypesService {
       .returning('*');
   }
   async deleteFormType(id: number) {
-    let deletedId = await this.knex('form_types')
+    const deletedId = await this.knex('form_types')
       .where({ id })
       .del()
       .returning('id');
